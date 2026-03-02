@@ -29,4 +29,8 @@ python src/kpi_engine.py
 
 Outputs are generated in the reports/ folder.
 
-This project simulates real-world operational reporting workflows commonly used in payments and commercial banking environments.
+Business Management Relevance
+
+This project mirrors how commercial banking performance teams prepare monthly management packs, including variance diagnostics, SLA monitoring, regional contribution analysis, and executive-level narrative summaries.
+
+It simulates the type of structured reporting workflows used in commercial banking, fintech, and payments organizations to support monthly business reviews and senior leadership decision-making.
