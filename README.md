@@ -26,12 +26,16 @@ This repo is designed to be forked into an internal company workflow. Fork it, r
 
 ## Minimum Edits To Make It Yours
 
-- data/payments_monthly_data_sample.csv
-- merchant segments
-- budget/SLA definitions
-- executive summary format
+Change these first:
 
-The fastest path is: fork the repo, replace the inputs above, run the demo or open the template, then adjust only the parts that reflect your company's workflow.
+| Edit | Where | Why |
+|---|---|---|
+| Replace monthly payments data. | `data/payments_monthly_data_sample.csv` | This drives TPV, success rate, failures, merchant trends, and executive metrics. |
+| Update merchant or customer segments. | `src/kpi_engine.py` | Makes performance views match how your business is managed. |
+| Tune budget, SLA, and performance definitions. | `src/kpi_engine.py` | Keeps KPI interpretation aligned with leadership expectations. |
+| Review validation expectations. | `tests/test_validation.py` | Prevents future data changes from silently breaking the model. |
+
+You can leave the KPI engine structure, sample generator, and README narrative alone on the first fork. Replace the data first; then tune definitions after reviewing one reporting period.
 
 ## Key Metrics
 
