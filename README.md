@@ -1,68 +1,92 @@
-# Payments Business KPI Reporting Simulation
+# Payments Business Management Command Center
 
-## Problem This Solves
+A reusable payments business management operating system for fintech founders, payments leads, business operations teams, and Founder’s Office operators.
 
-Payments businesses need a monthly management view that connects revenue, cost, budget variance, chargebacks, SLA breaches, regions, and underperforming merchants. The problem is not generating one metric; it is turning merchant-level data into an executive operating pack.
+Payments businesses lose visibility when revenue, cost, merchant health, chargebacks, SLA risk, budget variance, and regional performance sit in disconnected reports. This repo turns merchant portfolio data into a monthly management pack that helps operators see where the business is growing, where margin or SLA risk is building, and which merchants or regions need follow-up.
 
-## How It Helps
+## Problem
 
-- Generates a realistic payments portfolio dataset across merchants, regions, segments, and months.
-- Produces monthly KPI summaries, regional contribution views, underperforming merchant lists, SLA alerts, and an executive summary.
-- Gives founders, fintech operators, and business management teams a forkable template for monthly payments business reviews.
+Payments and fintech teams often have data spread across processors, merchant systems, support queues, finance sheets, and regional performance reports. That creates three operating problems:
 
-## When To Fork This
+- Revenue and cost trends are reviewed separately instead of as contribution health.
+- Merchant-level underperformance is hidden until it becomes a portfolio issue.
+- SLA breaches, chargebacks, and budget variance are not tied back to business ownership.
 
-- Fork this if you run payments, fintech, merchant acquiring, commercial banking, or revenue operations reporting.
-- Fork it when leadership needs to know where revenue variance, cost pressure, chargebacks, or SLA risk is coming from.
-- Replace the synthetic generator with your merchant data, then adapt the KPI engine and reports to your operating review.
+This project provides a compact reporting workflow for monthly payments business reviews: portfolio data in, KPI reports and executive summary out.
+
+## What This Repo Includes
+
+- `src/generate_merchant_data.py`: creates a synthetic merchant portfolio dataset across segments, regions, months, transaction volume, revenue, cost, chargebacks, SLA breaches, and budget revenue.
+- `src/kpi_engine.py`: builds monthly KPIs, regional summaries, underperforming merchant views, SLA alert lists, and an executive summary.
+- `data/payments_monthly_data_sample.csv`: tracked sample dataset used by the KPI engine and tests.
+- `tests/test_validation.py`: basic validation checks for sample data and core report generation.
+- `requirements.txt`: Python dependencies.
+- `.gitignore`: excludes local reports, logs, caches, virtualenvs, DBs, and scratch outputs.
+- `LICENSE`: MIT license for reuse.
+
+Generated reporting outputs are written to `reports/`, which is ignored by Git so local report refreshes are not accidentally staged.
+
+## System Workflow
+
+1. Generate or replace the merchant portfolio dataset.
+2. Load monthly merchant-level payments data.
+3. Calculate revenue, cost, chargeback, SLA, budget variance, and regional contribution KPIs.
+4. Identify underperforming merchants and high-SLA-risk merchants.
+5. Export operator-ready CSV reports and an executive summary.
+6. Use the outputs in a monthly business review, founder update, or payments ops cadence.
+
+## KPI Logic
+
+The repo models a payments portfolio at merchant-month grain:
+
+```text
+Merchant + Month -> Volume / Revenue / Cost / Chargebacks / SLA Breaches / Budget -> Reports
+```
+
+Core logic:
+
+- Monthly revenue growth = month-over-month gross revenue change.
+- Cost-to-income ratio = operating cost / gross revenue.
+- Chargeback rate = chargebacks / transaction volume.
+- Budget variance = gross revenue - budget revenue.
+- Budget variance percentage = budget variance / budget revenue.
+- Regional contribution = regional gross revenue share of total gross revenue.
+- Underperforming merchants = merchants sorted by budget variance percentage and SLA breaches.
+- SLA alerts = merchants at or above the 90th percentile of SLA breaches.
+
+The sample data is synthetic and intended for portfolio demonstration and adaptation. It should be replaced before using the workflow inside a real company.
+
+## Example Business Management Use Cases
+
+- Founder monthly review: understand whether revenue growth is being offset by cost, chargebacks, or SLA risk.
+- Payments business management: identify merchants that need pricing, support, or account-management intervention.
+- Regional performance review: compare revenue contribution and operational risk by geography.
+- Portfolio health monitoring: track budget variance and SLA breaches across merchant segments.
+- Investor or board reporting: convert operating KPIs into an executive-ready monthly summary.
+- Payments ops cadence: create a consistent reporting layer for follow-up, ownership, and escalation.
 
 ## Use This In Your Company
 
-This repo is designed to be forked into an internal company workflow. Fork it, replace the sample inputs with your company context, and keep only the parts that match your operating cadence. No permission request or sales call is needed before using it; the repo is the handoff. Check the license if you plan to redistribute your version.
+1. Replace the synthetic CSV with a real merchant portfolio export.
+2. Map your source fields to merchant ID, segment, region, month, transaction volume, revenue, cost, chargebacks, SLA breaches, and budget revenue.
+3. Tune KPI definitions so budget variance, chargeback rate, and SLA alerts match how your business is managed.
+4. Run the KPI engine before the monthly business review.
+5. Review the underperforming merchant and SLA alert files with named business owners.
+6. Use the executive summary as the first draft for founder, leadership, investor, or board reporting.
+7. Keep generated reports local unless you intentionally want to publish sanitized sample outputs.
 
-- Use it as a monthly management pack for payments, merchant acquiring, fintech, or commercial banking teams.
-- Keep the reports: monthly KPIs, regional summary, underperformers, SLA alerts, and executive summary.
-- Replace the synthetic merchant dataset with your own merchant portfolio export.
-
-## Minimum Edits To Make It Yours
-
-Change these first:
+## Minimum Edits Before First Use
 
 | Edit | Where | Why |
-|---|---|---|
-| Replace monthly payments data. | `data/payments_monthly_data_sample.csv` | This drives TPV, success rate, failures, merchant trends, and executive metrics. |
-| Update merchant or customer segments. | `src/kpi_engine.py` | Makes performance views match how your business is managed. |
-| Tune budget, SLA, and performance definitions. | `src/kpi_engine.py` | Keeps KPI interpretation aligned with leadership expectations. |
-| Review validation expectations. | `tests/test_validation.py` | Prevents future data changes from silently breaking the model. |
+| --- | --- | --- |
+| Replace sample merchant data | `data/payments_monthly_data_sample.csv` | The KPI engine depends on this dataset for revenue, cost, chargeback, SLA, budget, and regional views. |
+| Map real portfolio fields | `src/kpi_engine.py` | Align the current column names with your processor, warehouse, CRM, or finance export. |
+| Tune SLA risk logic | `src/kpi_engine.py` | The current alert logic uses merchants at or above the 90th percentile of SLA breaches. |
+| Tune underperformance logic | `src/kpi_engine.py` | The current ranking uses budget variance percentage and SLA breaches. |
+| Adapt executive summary language | `src/kpi_engine.py` | Match your leadership, board, or investor reporting tone. |
+| Update validation checks | `tests/test_validation.py` | Prevent future data changes from silently breaking the reporting workflow. |
 
-You can leave the KPI engine structure, sample generator, and README narrative alone on the first fork. Replace the data first; then tune definitions after reviewing one reporting period.
-
-## Key Metrics
-
-- Revenue growth, MoM and QoQ-ready
-- Cost-to-income ratio
-- Chargeback rate
-- Budget variance
-- Regional contribution
-- Top underperforming merchants
-- SLA alerts
-
-## Project Structure
-
-```text
-payments-business-management/
-├── data/
-│   └── payments_monthly_data_sample.csv
-├── src/
-│   ├── generate_merchant_data.py
-│   └── kpi_engine.py
-├── tests/
-│   └── test_validation.py
-├── requirements.txt
-└── README.md
-```
-
-## How To Run
+## How To Run / Use
 
 Install dependencies:
 
@@ -88,8 +112,45 @@ Run validation checks:
 python3 -m unittest discover -s tests -v
 ```
 
-Outputs are generated in the `reports/` folder.
+The generator writes `data/payments_monthly_data_sample.csv`. The KPI engine writes reports into `reports/`. Because `reports/` is ignored, local report runs will not be staged unless the ignore rules are changed.
 
-## Business Management Relevance
+## Outputs
 
-This mirrors how commercial banking and fintech performance teams prepare monthly management packs: variance diagnostics, SLA monitoring, regional contribution analysis, merchant follow-up, and executive-level narrative summaries.
+The KPI engine creates these local files under `reports/`:
+
+- `monthly_kpis.csv`: monthly revenue, cost, volume, chargeback, SLA, and budget variance metrics.
+- `regional_summary.csv`: gross revenue, transaction volume, SLA breaches, and revenue share by region.
+- `top_underperforming_merchants.csv`: merchant-level follow-up list based on budget variance and SLA risk.
+- `sla_alerts.csv`: merchants with high SLA breach counts relative to the portfolio.
+- `executive_summary.md`: concise monthly business-management summary for leadership review.
+
+## Folder Structure
+
+```text
+.
+|-- data/
+|   `-- payments_monthly_data_sample.csv
+|-- src/
+|   |-- generate_merchant_data.py
+|   `-- kpi_engine.py
+|-- tests/
+|   `-- test_validation.py
+|-- .gitignore
+|-- LICENSE
+|-- README.md
+`-- requirements.txt
+```
+
+## Customization Guide
+
+- For merchant acquiring: add approval rate, dispute rate, settlement lag, MDR, and merchant category.
+- For fintech SaaS: add customer cohort, subscription revenue, payment failure reason, and plan tier.
+- For regional management: add country, currency, FX assumptions, and regional owner.
+- For Founder’s Office reporting: add owner, intervention, status, next action, and review date to merchant outputs.
+- For board reporting: add target metrics, forecast variance, risk commentary, and month-end narrative.
+
+Keep the operating loop stable: refresh portfolio data, calculate KPIs, identify variance and risk, assign follow-up owners, and review the business monthly.
+
+## Portfolio Note
+
+This repo is part of a Founder’s Office / startup operator portfolio focused on practical business operating systems. It demonstrates how a fintech operator can turn payments portfolio data into KPI visibility, merchant risk detection, regional contribution analysis, and executive-ready reporting.
