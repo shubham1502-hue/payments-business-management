@@ -16,6 +16,21 @@ Payments businesses need a monthly management view that connects revenue, cost, 
 - Fork it when leadership needs to know where revenue variance, cost pressure, chargebacks, or SLA risk is coming from.
 - Replace the synthetic generator with your merchant data, then adapt the KPI engine and reports to your operating review.
 
+## Use This In Your Company
+
+- Use it as a monthly management pack for payments, merchant acquiring, fintech, or commercial banking teams.
+- Keep the reports: monthly KPIs, regional summary, underperformers, SLA alerts, and executive summary.
+- Replace the synthetic merchant dataset with your own merchant portfolio export.
+
+## Minimum Edits To Make It Yours
+
+- data/payments_monthly_data_sample.csv
+- merchant segments
+- budget/SLA definitions
+- executive summary format
+
+The fastest path is: fork the repo, replace the inputs above, run the demo or open the template, then adjust only the parts that reflect your company's workflow.
+
 ## Key Metrics
 
 - Revenue growth, MoM and QoQ-ready
