@@ -53,7 +53,7 @@ After:
 - Run `python3 src/generate_merchant_data.py`.
 - Run `python3 src/kpi_engine.py`.
 - Run `python3 -m unittest discover -s tests -v`.
-- Open `reports/executive_summary.md` first.
+- After running the KPI engine, open `reports/executive_summary.md` locally.
 
 ## How to fork and use this for your company
 
@@ -69,7 +69,7 @@ After:
 - Replace one CSV: `data/payments_monthly_data_sample.csv`.
 - Edit threshold values in `src/kpi_engine.py` only if needed.
 - Run one KPI command.
-- Read `reports/executive_summary.md` first.
+- Read the locally generated `reports/executive_summary.md` first.
 
 ## Input format
 
@@ -88,8 +88,8 @@ The default sample data and examples are synthetic, anonymized, or template-only
 ## Output files
 
 - `data/payments_monthly_data_sample.csv`: generated merchant sample data
-- `reports/monthly_kpis.csv`, `reports/regional_summary.csv`, `reports/top_underperforming_merchants.csv`, and `reports/sla_alerts.csv`: KPI engine outputs
-- `reports/executive_summary.md`: founder-ready monthly summary
+- `reports/monthly_kpis.csv`, `reports/regional_summary.csv`, `reports/top_underperforming_merchants.csv`, and `reports/sla_alerts.csv`: KPI engine outputs generated locally under `reports/`
+- `reports/executive_summary.md`: founder-ready monthly summary generated locally after running the KPI engine
 - validation output from `tests/test_validation.py`
 
 ## Example founder workflow
