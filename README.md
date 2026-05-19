@@ -4,6 +4,10 @@ Payments business management workflow for merchant health, margin, SLA risk, bud
 
 <!-- FOUNDER_OS_STANDARD_README -->
 
+## Portfolio role
+
+This is a supporting fintech and business operations analytics repo. Use it to inspect merchant health, margin pressure, SLA risk, budget variance, and regional performance. It supports the portfolio as an analytics proof point, not as a flagship Founder OS module.
+
 ## The founder problem
 
 Payments businesses lose visibility when revenue, cost, merchant health, chargebacks, SLA risk, and regional performance sit in disconnected reports. Founders need one monthly pack that identifies where the business is healthy and where follow-up is needed.
